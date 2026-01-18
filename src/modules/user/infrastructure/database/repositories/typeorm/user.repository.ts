@@ -1,9 +1,16 @@
 import { UserOrmEntity } from '../../entities/user.orm-entity';
+<<<<<<< HEAD
 import { IUserRepository } from 'src/modules/user/domains/repositories/user.repository.interface';
 import { User } from 'src/modules/user/domains/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+=======
+import { Repository } from 'typeorm/browser/repository/Repository.js';
+import { IUserRepository } from 'src/modules/user/domains/repositories/user.repository.interface';
+import { User } from 'src/modules/user/domains/entities/user.entity';
+import { Injectable } from '@nestjs/common';
+>>>>>>> 800686857dfd550c366da9bb71f36bc31b5e649f
 
 @Injectable()
 export class TypeOrmUserRepository implements IUserRepository {
