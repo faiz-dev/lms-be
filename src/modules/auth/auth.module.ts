@@ -6,10 +6,14 @@ import { LoginUseCase } from './application/use-cases/login.use-case';
 import { AUTH_SERVICE_TOKEN } from './domain/interfaces/auth-service.interface';
 import { AuthService } from './infrastructure/services/auth.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
 
 @Module({
   imports: [
+    ConfigModule,
     UsersModule,
+    PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -24,6 +28,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   controllers: [AuthController],
   providers: [
     LoginUseCase,
+    JwtStrategy,
     {
       provide: AUTH_SERVICE_TOKEN,
       useClass: AuthService,
