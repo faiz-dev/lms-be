@@ -16,7 +16,7 @@ export class TransformResponseInterceptor<T> implements NestInterceptor<
   T,
   ApiResponse<T>
 > {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector) { }
 
   intercept(
     context: ExecutionContext,
@@ -40,7 +40,7 @@ export class TransformResponseInterceptor<T> implements NestInterceptor<
         return {
           statusCode,
           message,
-          data,
+          data: data ?? null,
         };
       }),
     );

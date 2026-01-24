@@ -9,6 +9,8 @@ import { PASSWORD_HASHER_TOKEN } from './domains/services/password-hasher.interf
 import { BcryptPasswordHasher } from './infrastructure/services/bcrypt-password.hasher';
 import { USER_REPOSITORY_TOKEN } from './domains/repositories/user.repository.interface';
 import { TypeOrmUserRepository } from './infrastructure/database/repositories/typeorm/user.repository';
+import { DeleteUserUseCase } from './application/use-cases/delete-user.use-case';
+import { GetUserAllUseCase } from './application/use-cases/get-user-all.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserOrmEntity])],
@@ -17,8 +19,11 @@ import { TypeOrmUserRepository } from './infrastructure/database/repositories/ty
     CreateUserUseCase,
     UpdateUserUseCase,
     GetUserUseCase,
+    DeleteUserUseCase,
+    GetUserAllUseCase,
     { provide: PASSWORD_HASHER_TOKEN, useClass: BcryptPasswordHasher },
-    { provide: USER_REPOSITORY_TOKEN, useClass: TypeOrmUserRepository}
+    { provide: USER_REPOSITORY_TOKEN, useClass: TypeOrmUserRepository },
   ],
+  exports: [USER_REPOSITORY_TOKEN],
 })
 export class UsersModule { }

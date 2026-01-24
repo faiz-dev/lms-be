@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './modules/user/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './modules/user/users.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -17,9 +16,11 @@ import { UsersModule } from './modules/user/users.module';
       username: process.env.DATABASE_USERNAME ?? 'root',
       password: process.env.DATABASE_PASSWORD ?? '',
       database: process.env.DATABASE_NAME ?? 'test',
-      entities: [],
+      entities: [__dirname + '/**/*.orm-entity{.ts,.js}'],
+      autoLoadEntities: true,
     }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

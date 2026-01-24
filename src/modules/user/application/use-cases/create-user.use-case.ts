@@ -35,6 +35,8 @@ export class CreateUserUseCase {
       role: dto.role,
     });
 
+    console.log('Creating user with data:', user);
+
     return await this.userRepository.createUser(user);
   }
 }

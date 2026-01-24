@@ -5,11 +5,12 @@ export interface IUserProps {
   role: 'admin' | 'teacher' | 'student';
   createdAt: Date;
   updatedAt: Date;
+  deletedAt: Date | null;
 }
 
 export type CreateUserParam = Omit<
   IUserProps,
-  'id' | 'createdAt' | 'updatedAt'
+  'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
 > & {
   createdAt?: Date; // Optional (untuk keperluan restore/seeding)
   updatedAt?: Date;
@@ -23,6 +24,7 @@ export class User implements IUserProps {
   readonly role: 'admin' | 'teacher' | 'student';
   readonly createdAt: Date;
   readonly updatedAt: Date;
+  readonly deletedAt: Date | null;
 
   constructor(props: IUserProps) {
     this.id = props.id;
@@ -31,6 +33,7 @@ export class User implements IUserProps {
     this.role = props.role;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
+    this.deletedAt = props.deletedAt;
   }
 
   static create(props: CreateUserParam): User {
@@ -40,6 +43,7 @@ export class User implements IUserProps {
       ...props,
       createdAt: now,
       updatedAt: props.updatedAt ?? now,
+      deletedAt: null,
     });
   }
 
