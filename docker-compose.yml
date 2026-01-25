@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: always
+    environment:
+      # Ganti password root dengan yang SANGAT KUAT
+      MYSQL_ROOT_PASSWORD: _9kL#mP2@vN$xQ7!rW5_
+      MYSQL_DATABASE: quiz-app
+      MYSQL_USER: quiz_user
+      MYSQL_PASSWORD: _9kL#mP2@vN$xQ7!rW5_
+    volumes:
+      - /data/lms-app/db:/var/lib/mysql
+      # Pastikan folder 'init-db' berisi file .sql ada di server di sebelah file ini
+      - ./init-db:/docker-entrypoint-initdb.d
+    # ❌ SECURITY: Tidak ada 'ports', database tersembunyi dari dunia luar.
+    networks:
+      - quiz_net
+  app:
+    image: pplgkandeman/lms-app:latest
+    container_name: lms-app
+    restart: always
+    depends_on:
+      - db
+    # 👇 INI PENGGANTI .ENV PRODUCTION KAMU
+    environment:
+      DATABASE_HOST: db            # Bedanya disini: pakai nama service container
+      DATABASE_PORT: 3306
+      DATABASE_USER: quiz_user
+      DATABASE_PASSWORD: _9kL#mP2@vN$xQ7!rW5_
+      DATABASE_NAME: quiz-app
+      DATABASE_SYNC: false
+      JWT_SECRET: _7mK9$pL2@vN#xQ5!rW8_kP3$mN7@vL9#xQ2!rW6_
+      NODE_ENV: production
+      PORT: 3000
+    networks:
+      - quiz_net
+      - public_net
+
+networks:
+  quiz_net:
+    driver: bridge
+  public_net:
+    external: true

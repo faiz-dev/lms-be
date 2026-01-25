@@ -1,0 +1,27 @@
+# Abaikan folder dependency lokal (WAJIB! Biar install ulang di Docker)
+node_modules/
+
+# Abaikan hasil build lokal
+dist/
+
+# Abaikan file git & log error
+.git/
+.gitignore
+npm-debug.log
+yarn-error.log
+
+# Abaikan file environment & config lokal (PENTING untuk keamanan)
+.env
+.env.*
+
+# Abaikan file Docker & CI/CD (Gak perlu masuk ke dalam container)
+Dockerfile
+docker-compose.yml
+docker-compose.*.yml
+.dockerignore
+.github/
+
+# Abaikan file testing & dokumentasi
+test/
+coverage/
+README.md

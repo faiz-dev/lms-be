@@ -9,7 +9,10 @@ import { QuizModule } from './modules/quiz/quiz.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      ignoreEnvFile: process.env.NODE_ENV === 'production',
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST ?? 'localhost',
