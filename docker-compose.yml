@@ -1,16 +1,13 @@
-version: '3.8'
-
 services:
   db:
     image: mysql:8.0
     container_name: db
     restart: always
     environment:
-      # Ganti password root dengan yang SANGAT KUAT
-      MYSQL_ROOT_PASSWORD: _9kL#mP2@vN$xQ7!rW5_
-      MYSQL_DATABASE: quiz-app
-      MYSQL_USER: quiz_user
-      MYSQL_PASSWORD: _9kL#mP2@vN$xQ7!rW5_
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - /data/lms-app/db:/var/lib/mysql
       # Pastikan folder 'init-db' berisi file .sql ada di server di sebelah file ini
@@ -19,7 +16,8 @@ services:
     networks:
       - quiz_net
   app:
-    image: pplgkandeman/lms-app:latest
+    build: .
+    image: lms-app:latest
     container_name: lms-app
     restart: always
     depends_on:
@@ -28,11 +26,11 @@ services:
     environment:
       DATABASE_HOST: db            # Bedanya disini: pakai nama service container
       DATABASE_PORT: 3306
-      DATABASE_USER: quiz_user
-      DATABASE_PASSWORD: _9kL#mP2@vN$xQ7!rW5_
-      DATABASE_NAME: quiz-app
+      DATABASE_USER: ${DB_USER}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      DATABASE_NAME: ${DB_NAME}
       DATABASE_SYNC: false
-      JWT_SECRET: _7mK9$pL2@vN#xQ5!rW8_kP3$mN7@vL9#xQ2!rW6_
+      JWT_SECRET: ${JWT_SECRET}
       NODE_ENV: production
       PORT: 3000
     networks:

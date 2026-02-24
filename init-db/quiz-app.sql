@@ -188,7 +188,7 @@ CREATE TABLE `students`  (
 DROP TABLE IF EXISTS `teacher`;
 CREATE TABLE `teacher`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `fullname` int NOT NULL,
+  `fullname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `users_id` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `teacher_users`(`users_id` ASC) USING BTREE,
