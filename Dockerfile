@@ -30,7 +30,7 @@ RUN npm ci --only=production && npm cache clean --force
 # ---------------------------------------
 FROM node:20-alpine
 
-ENV NODE_ENV production
+ENV NODE_ENV="production"
 WORKDIR /app
 
 COPY package*.json ./

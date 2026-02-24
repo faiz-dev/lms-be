@@ -30,4 +30,5 @@ jobs:
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
           
+          docker-compose down
           docker-compose up -d --build app
