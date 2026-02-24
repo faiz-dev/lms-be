@@ -22,4 +22,12 @@ jobs:
         script: |
           cd ${{ secrets.SERVER_PROJECT_PATH }}
           git pull origin main
+          
+          # Creates the .env file directly on your remote server using your GitHub repository secrets
+          echo "DB_ROOT_PASSWORD=${{ secrets.DB_ROOT_PASSWORD }}" > .env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          
           docker-compose up -d --build app

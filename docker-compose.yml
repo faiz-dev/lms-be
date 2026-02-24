@@ -29,7 +29,7 @@ services:
       DATABASE_USER: ${DB_USER}
       DATABASE_PASSWORD: ${DB_PASSWORD}
       DATABASE_NAME: ${DB_NAME}
-      DATABASE_SYNC: false
+      DATABASE_SYNC: "false"
       JWT_SECRET: ${JWT_SECRET}
       NODE_ENV: production
       PORT: 3000
