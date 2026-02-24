@@ -12,7 +12,10 @@ services:
       - /data/lms-app/db:/var/lib/mysql
       # Pastikan folder 'init-db' berisi file .sql ada di server di sebelah file ini
       - ./init-db:/docker-entrypoint-initdb.d
-    # ❌ SECURITY: Tidak ada 'ports', database tersembunyi dari dunia luar.
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
     networks:
       - quiz_net
   app:
@@ -21,7 +24,8 @@ services:
     container_name: lms-app
     restart: always
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     # 👇 INI PENGGANTI .ENV PRODUCTION KAMU
     environment:
       DATABASE_HOST: db            # Bedanya disini: pakai nama service container
